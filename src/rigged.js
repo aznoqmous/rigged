@@ -18,7 +18,7 @@ export default class Rigged {
         this.elements = this.parse(this.template)
         this.elements.map(element => {
             if (element.id)
-                this[element.id.replace(/\#/, '')] = element
+                this[element.id] = element
         })
     }
 
@@ -87,7 +87,7 @@ export default class Rigged {
     }
 
     parseId(str) {
-        return str.match(/\#[^\#\. ]*/)
+        return str.match(/\#[^\#\. ]*/).replace(/#/, '')
     }
 
     parseAttributes(str) {
