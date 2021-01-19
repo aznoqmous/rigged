@@ -88,7 +88,7 @@ export default class Rigged {
 
     parseId(str) {
         let id = str.match(/\#[^\#\. ]*/)
-        if(id) return id.replace(/#/, '')
+        if(id) return id[0].replace(/#/, '')
         return null
     }
 
