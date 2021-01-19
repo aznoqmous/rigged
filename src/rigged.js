@@ -37,7 +37,7 @@ export default class Rigged {
             let el = document.createElement(tag)
 
             let id = this.parseId(str)
-            if (id) el.id = id[0]
+            if (id) el.id = id
 
             let classes = this.parseClasses(str)
             if (classes) classes.map(cls => el.classList.add(cls))
