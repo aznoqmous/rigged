@@ -87,7 +87,9 @@ export default class Rigged {
     }
 
     parseId(str) {
-        return str.match(/\#[^\#\. ]*/).replace(/#/, '')
+        let id = str.match(/\#[^\#\. ]*/)
+        if(id) return id.replace(/#/, '')
+        return null
     }
 
     parseAttributes(str) {
