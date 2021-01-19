@@ -1,4 +1,4 @@
-export default class Basic {
+export default class Rigged {
 
     constructor(options) {
         this.init(options)
