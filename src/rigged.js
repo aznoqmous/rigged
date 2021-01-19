@@ -11,6 +11,7 @@ export default class Rigged {
             template: `div`
         }, options)
         for (let key in options) this[key] = options[key]
+        if(!this.container) this.container = document.body
     }
 
     build() {
