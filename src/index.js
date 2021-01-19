@@ -1,12 +1,14 @@
-import Basic from './basic'
+import Rigged from './rigged'
 document.addEventListener('DOMContentLoaded', ()=>{
-  let element = new Basic({
+  let element = new Rigged({
     template: `
-    div .controls
-      i #buttonLeft .button.button-left
-      i .button-right
-      span .btn
-      input [type="text"] [autofocus="true"]
+    div .nstool
+      div .search
+        input #search [autofocus="true"] [placeholder="yoursite.com"]
+        div #suggests
+      input #mail [type="mail"] [placeholder="mail"]
+      div #dnsResults
+      div #certResults
     `
   })
 

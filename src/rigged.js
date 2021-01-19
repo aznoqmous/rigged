@@ -26,6 +26,7 @@ export default class Rigged {
         let parsed = this.template.trim().split('\n')
         let tree = []
         let lastIndent = 0
+        let lastEl = null
 
         if (!parsed.length) return null
 
@@ -48,20 +49,28 @@ export default class Rigged {
 
             let indent = str.match(/^\ */)[0].length
 
+
             if (!tree.length) {
                 this.container.appendChild(el)
                 tree.push(el)
             } else {
+
                 // remove one from tree then append inside parent
                 if (indent < lastIndent) {
-                    tree = tree.splice(tree.length - 1, 1)
+                    tree.splice(tree.length-1, 1)
                     tree[tree.length - 1].appendChild(el)
-                } else {
+                }
+                else if(indent > lastIndent) {
+                    if(!tree.includes(lastEl)) tree.push(lastEl)
+                    lastEl.appendChild(el)
+                }
+                else {
                     tree[tree.length - 1].appendChild(el)
                 }
             }
 
             lastIndent = indent
+            lastEl = el
             return el
         })
 
@@ -70,7 +79,9 @@ export default class Rigged {
     }
 
     parseClasses(str) {
-        str = str.match(/\.[^\.]*/gms)
+        str = str
+            .replace(/\[[^\[\]]*?\]/gs, '') // hide attributes before parsing classes (avoir dot inside attributes values)
+            .match(/\.[^\.]*/gms)
         if(!str) return null
         return str.map(cls => cls.replace(/\./, ''))
     }
