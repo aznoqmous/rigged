@@ -20,6 +20,7 @@ export default class Rigged {
             if (element.id)
                 this[element.id] = element
         })
+        this.element = this.elements[0]
     }
 
     parse() {
