@@ -7,11 +7,10 @@ export default class Rigged {
 
     init(options) {
         options = Object.assign({
-            container: document.body,
+            container: null,
             template: `div`
         }, options)
         for (let key in options) this[key] = options[key]
-        if(!this.container) this.container = document.body
     }
 
     build() {
@@ -21,6 +20,7 @@ export default class Rigged {
                 this[element.id] = element
         })
         this.element = this.elements[0]
+        if(this.container) this.container.appendChild(this.element)
     }
 
     parse() {
@@ -55,7 +55,6 @@ export default class Rigged {
 
 
             if (!tree.length) {
-                this.container.appendChild(el)
                 tree.push(el)
             } else {
 
