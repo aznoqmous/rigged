@@ -47,6 +47,9 @@ export default class Rigged {
               el.setAttribute(attr.key, attr.value)
             })
 
+            let content = this.parseContent(str)
+            if(content) el.innerHTML = content
+
             let indent = str.match(/^\ */)[0].length
 
 
@@ -74,14 +77,13 @@ export default class Rigged {
             return el
         })
 
-
         return parsed
     }
 
     parseClasses(str) {
         str = str
             .replace(/\[[^\[\]]*?\]/gs, '') // hide attributes before parsing classes (avoir dot inside attributes values)
-            .match(/\.[^\.]*/gms)
+            .match(/\.[^\.\ ]*/gms)
         if(!str) return null
         return str.map(cls => cls.replace(/\./, ''))
     }
@@ -100,6 +102,13 @@ export default class Rigged {
           let value = attr.match(/\".*?\"/)[0].replaceAll('"', '')
           return {key, value}
         })
+    }
+
+    parseContent(str){
+        str = str.match(/\([^\)]*\)/)
+        if(!str) return ""
+        str = str[0].replace(/[\(|\)]/gs, '')
+        return str
     }
 
 }
