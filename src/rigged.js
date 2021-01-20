@@ -111,4 +111,12 @@ export default class Rigged {
         return str
     }
 
+    selectOne(selector){
+        return this.element.querySelector(selector)
+    }
+
+    selectAll(selector){
+        return [...this.element.querySelectorAll(selector)]
+    }
+
 }
