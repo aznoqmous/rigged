@@ -83,27 +83,40 @@ export default class Rigged {
         return parsed
     }
 
+    removeAttributes(str){
+      return str.replace(/\[[^\[\]]*?\]/gs, '')
+    }
+
+    removeContent(str){
+      return str.replace(/\([^\(\)]*?\)/gs, '')
+    }
+
     parseClasses(str) {
-        str = str
-            .replace(/\[[^\[\]]*?\]/gs, '') // hide attributes before parsing classes (avoir dot inside attributes values)
-            .match(/\.[^\.\ ]*/gms)
+        str = this.removeAttributes(str)
+        str = this.removeContent(str)
+
+        str = str.match(/\.[^\.\ ]*/gms)
+
         if(!str) return null
         return str.map(cls => cls.replace(/\./, ''))
     }
 
     parseId(str) {
-        let id = str.match(/\#[^\#\. ]*/)
-        if(id) return id[0].replace(/#/, '')
+        str = this.removeContent(str)
+        str = str.match(/\#[^\#\. ]*/)
+        if(str) return str[0].replace(/#/, '')
         return null
     }
 
     parseConnector(str){
+      str = this.removeContent(str)
       let connector = str.match(/\@[^\@\. ]*/)
       if(connector) return connector[0].replace(/@/, '')
       return null
     }
 
     parseAttributes(str) {
+        str = this.removeContent(str)
         str = str.match(/\[[^\]]*\]/gm)
         if(!str) return null
         return str.map(attr => {
