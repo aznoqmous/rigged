@@ -16,8 +16,8 @@ export default class Rigged {
     build() {
         this.elements = this.parse(this.template)
         this.elements.map(element => {
-            if (element.id)
-                this[element.id] = element
+            if (element._connector)
+                this[element._connector] = element
         })
         this.element = this.elements[0]
         if(this.container) this.container.appendChild(this.element)
@@ -39,6 +39,9 @@ export default class Rigged {
 
             let id = this.parseId(str)
             if (id) el.id = id
+
+            let connector = this.parseConnector(str)
+            if(connector) el._connector = connector
 
             let classes = this.parseClasses(str)
             if (classes) classes.map(cls => el.classList.add(cls))
@@ -92,6 +95,12 @@ export default class Rigged {
         let id = str.match(/\#[^\#\. ]*/)
         if(id) return id[0].replace(/#/, '')
         return null
+    }
+
+    parseConnector(str){
+      let connector = str.match(/\@[^\@\. ]*/)
+      if(connector) return connector[0].replace(/@/, '')
+      return null
     }
 
     parseAttributes(str) {
