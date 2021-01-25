@@ -141,4 +141,8 @@ export default class Rigged {
         return [...this.element.querySelectorAll(selector)]
     }
 
+    remove(){
+      this.element.parentElement.removeChild(this.element)
+    }
+
 }

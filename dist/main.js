@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rigged__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rigged */ \"./src/rigged.js\");\n\r\ndocument.addEventListener('DOMContentLoaded', ()=>{\r\n  let element = new _rigged__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\r\n    container: document.body,\r\n    template: `\r\n    div .nstool\r\n      h1 (NSTOOL.aoizh#oa[paizjdpoazjd]izhd.apidzd)\r\n      div .search #bjr (dis a search)\r\n        input #search [autofocus=\"true\"] [placeholder=\"yoursite.com\"]\r\n        div #suggests\r\n      input #mail [type=\"mail\"] [placeholder=\"mail\"]\r\n      div #dnsResults\r\n      div #certResults\r\n    `\r\n  })\r\n\r\n})\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rigged__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rigged */ \"./src/rigged.js\");\n\r\n\r\ndocument.addEventListener('DOMContentLoaded', ()=>{\r\n  let element = new _rigged__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\r\n    container: document.body,\r\n    template: `\r\n    div .nstool\r\n      h1 (NSTOOL.aoizh#oa[paizjdpoazjd]izhd.apidzd)\r\n      div .search #bjr (dis a search)\r\n        input #search [autofocus=\"true\"] [placeholder=\"yoursite.com\"]\r\n        div #suggests\r\n      input #mail [type=\"mail\"] [placeholder=\"mail\"]\r\n      div #dnsResults\r\n      div #certResults\r\n    `\r\n  })\r\n\r\n})\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 

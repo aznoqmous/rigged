@@ -1,4 +1,5 @@
 import Rigged from './rigged'
+
 document.addEventListener('DOMContentLoaded', ()=>{
   let element = new Rigged({
     container: document.body,
