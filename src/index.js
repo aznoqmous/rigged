@@ -9,10 +9,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
       div .search #bjr (dis a search)
         input #search [autofocus="true"] [placeholder="yoursite.com"]
         div #suggests
-      input #mail [type="mail"] [placeholder="mail"]
+      input @mail #mail [type="mail"] [placeholder="mail"]
       div #dnsResults
       div #certResults
     `
   })
 
+  element.mail.setStyle({
+    color: 'red',
+    padding: '1rem'
+  })
 })

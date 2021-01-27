@@ -1,3 +1,4 @@
+import Parser from './parser'
 export default class Rigged {
 
     constructor(options) {
@@ -14,135 +15,51 @@ export default class Rigged {
     }
 
     build() {
-        this.elements = this.parse(this.template)
+        this.elements = Parser.parse(this.template)
         this.elements.map(element => {
             if (element._connector)
                 this[element._connector] = element
+                this.addMethods(element)
         })
         this.element = this.elements[0]
+        this.addMethods(this.element)
         if(this.container) this.container.appendChild(this.element)
     }
 
-    parse() {
-        let parsed = this.template.trim().split('\n')
-        let tree = []
-        let lastIndent = 0
-        let lastEl = null
-
-        if (!parsed.length) return null
-
-        parsed = parsed.map((str, i) => {
-
-            let tag = str.trim().match(/^[^ ]*/)[0]
-
-            let el = document.createElement(tag)
-
-            let id = this.parseId(str)
-            if (id) el.id = id
-
-            let connector = this.parseConnector(str)
-            if(connector) el._connector = connector
-
-            let classes = this.parseClasses(str)
-            if (classes) classes.map(cls => el.classList.add(cls))
-
-            let attributes = this.parseAttributes(str)
-            if(attributes) attributes.map(attr => {
-              el.setAttribute(attr.key, attr.value)
-            })
-
-            let content = this.parseContent(str)
-            if(content) el.innerHTML = content
-
-            let indent = str.match(/^\ */)[0].length
-
-
-            if (!tree.length) {
-                tree.push(el)
-            } else {
-
-                // remove one from tree then append inside parent
-                if (indent < lastIndent) {
-                    tree.splice(tree.length-1, 1)
-                    tree[tree.length - 1].appendChild(el)
-                }
-                else if(indent > lastIndent) {
-                    if(!tree.includes(lastEl)) tree.push(lastEl)
-                    lastEl.appendChild(el)
-                }
-                else {
-                    tree[tree.length - 1].appendChild(el)
-                }
-            }
-
-            lastIndent = indent
-            lastEl = el
-            return el
-        })
-
-        return parsed
+    /**
+    * Magic methods
+    */
+    addMethods(el){
+      el.setStyle = (styles)=>{
+        return this.setStyle(styles, el)
+      }
+      el.remove = ()=>{
+        this.remove(el)
+      }
+      el.selectOne = (selector)=>{
+        return this.selectOne(selector, el)
+      }
+      el.selectAll = (selector)=>{
+        return this.selectAll(selector, el)
+      }
     }
 
-    removeAttributes(str){
-      return str.replace(/\[[^\[\]]*?\]/gs, '')
+    setStyle(styles, el){
+      for(let key in styles) el.style[key] = styles[key]
+      return el
     }
 
-    removeContent(str){
-      return str.replace(/\([^\(\)]*?\)/gs, '')
+    selectOne(selector, el){
+        return el.querySelector(selector)
     }
 
-    parseClasses(str) {
-        str = this.removeAttributes(str)
-        str = this.removeContent(str)
-
-        str = str.match(/\.[^\.\ ]*/gms)
-
-        if(!str) return null
-        return str.map(cls => cls.replace(/\./, ''))
+    selectAll(selector, el){
+        return [...el.querySelectorAll(selector)]
     }
 
-    parseId(str) {
-        str = this.removeContent(str)
-        str = str.match(/\#[^\#\. ]*/)
-        if(str) return str[0].replace(/#/, '')
-        return null
+    remove(el){
+      el.parentElement.removeChild(el)
     }
 
-    parseConnector(str){
-      str = this.removeContent(str)
-      let connector = str.match(/\@[^\@\. ]*/)
-      if(connector) return connector[0].replace(/@/, '')
-      return null
-    }
-
-    parseAttributes(str) {
-        str = this.removeContent(str)
-        str = str.match(/\[[^\]]*\]/gm)
-        if(!str) return null
-        return str.map(attr => {
-          let key = attr.replace('[', '').replace(/\=.*?$/, '')
-          let value = attr.match(/\".*?\"/)[0].replaceAll('"', '')
-          return {key, value}
-        })
-    }
-
-    parseContent(str){
-        str = str.match(/\([^\)]*\)/)
-        if(!str) return ""
-        str = str[0].replace(/[\(|\)]/gs, '')
-        return str
-    }
-
-    selectOne(selector){
-        return this.element.querySelector(selector)
-    }
-
-    selectAll(selector){
-        return [...this.element.querySelectorAll(selector)]
-    }
-
-    remove(){
-      this.element.parentElement.removeChild(this.element)
-    }
 
 }
