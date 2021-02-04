@@ -36,6 +36,9 @@ export default class Rigged {
       el.remove = ()=>{
         this.remove(el)
       }
+      el.clear = ()=>{
+        this.clear(el)
+      }
       el.selectOne = (selector)=>{
         return this.selectOne(selector, el)
       }
@@ -59,6 +62,10 @@ export default class Rigged {
 
     remove(el){
       el.parentElement.removeChild(el)
+    }
+
+    clear(el){
+      el.innerHTML = ''
     }
 
 
