@@ -47,24 +47,29 @@ export default class Rigged {
       }
     }
 
-    setStyle(styles, el){
+    setStyle(styles, el=null){
+      if(!el) el = this.element
       for(let key in styles) el.style[key] = styles[key]
       return el
     }
 
-    selectOne(selector, el){
+    selectOne(selector, el=null){
+        if(!el) el = this.element
         return el.querySelector(selector)
     }
 
-    selectAll(selector, el){
+    selectAll(selector, el=null){
+        if(!el) el = this.element
         return [...el.querySelectorAll(selector)]
     }
 
-    remove(el){
+    remove(el=null){
+      if(!el) el = this.element
       el.parentElement.removeChild(el)
     }
 
-    clear(el){
+    clear(el=null){
+      if(!el) el = this.element
       el.innerHTML = ''
     }
 
